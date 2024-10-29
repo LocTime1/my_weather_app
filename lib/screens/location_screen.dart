@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:my_weather_app/API/weather_api.dart';
+import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/model/last_data.dart';
 import 'package:my_weather_app/screens/home_screen.dart';
 

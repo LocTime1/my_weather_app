@@ -18,10 +18,10 @@ class LastData {
   }
 
   LastData.fromMap(Map<String, dynamic> map) {
-    map['id'] = id;
-    map['lat'] = lat;
-    map['long'] = long;
-    map['city'] = city;
-    map['country'] = country;
+    id = map['id'];
+    lat = map['lat'];
+    long = map['long'];
+    city = map['city'];
+    country = map['country'];
   }
 }

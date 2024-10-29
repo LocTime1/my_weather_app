@@ -32,14 +32,14 @@ class DBProvider {
         'CREATE TABLE $table($columnId INTEGER PRIMARY KEY AUTOINCREMENT, $columnLat REAL, $columnLong REAL, $columnCity STRING, $columnCountry STRING)');
   }
 
-  Future<List<LastData>> getLastData() async {
+  Future<LastData> getLastData() async {
     Database db = await database;
     final List<Map<String, dynamic>> dataMapList = await db.query(table);
     final List<LastData> dataList = [];
     dataMapList.forEach((dataMap) {
       dataList.add(LastData.fromMap(dataMap));
     });
-    return dataList;
+    return dataList[dataList.length-1];
   }
 
   Future<LastData> insertData(LastData lastData) async {

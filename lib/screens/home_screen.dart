@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_weather_app/db/database.dart';
+import 'package:my_weather_app/model/last_data.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
 import 'package:my_weather_app/widgets/city_view.dart';
 
@@ -35,24 +37,36 @@ class _MainScreenState extends State<HomeScreen> {
         color: Color.fromARGB(255, 60, 193, 255),
         child: Column(
           children: [
-            Divider(color: Colors.black, indent: 15, endIndent: 15, thickness: 0.4,),
-            Expanded(
-            child: ListView(
-              children: [
-                FutureBuilder(
-                    future: forecast,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return CityView(snapshot: snapshot);
-                      } else {
-                        return Center(
-                            child: Container(child: CircularProgressIndicator(),
-                                ));
-                      }
-                    })
-              ],
+            Divider(
+              color: Colors.black,
+              indent: 15,
+              endIndent: 15,
+              thickness: 0.4,
             ),
-          )],
+            Expanded(
+              child: ListView(
+                children: [
+                  FutureBuilder(
+                      future: forecast,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          DBProvider.db.insertData(LastData(
+                              lat: snapshot.data!.location!.lat,
+                              long: snapshot.data!.location!.lon,
+                              city: snapshot.data!.location!.name,
+                              country: snapshot.data!.location!.country));
+                          return CityView(snapshot: snapshot, lastData: DBProvider.db.getLastData(),);
+                        } else {
+                          return Center(
+                              child: Container(
+                            child: CircularProgressIndicator(),
+                          ));
+                        }
+                      })
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );

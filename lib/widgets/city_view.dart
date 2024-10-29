@@ -1,21 +1,21 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_weather_app/model/last_data.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
 import 'package:translator/translator.dart';
 
 class CityView extends StatelessWidget {
   final AsyncSnapshot<WeatherForecast> snapshot;
-  CityView({super.key, required this.snapshot});
+  final Future<LastData> lastData;
+  CityView({super.key, required this.snapshot, required this.lastData});
 
   @override
   Widget build(BuildContext context) {
-    Future<Translation> city =
-        translateToRussian(snapshot.data!.location!.name.toString());
-    Future<Translation> country =
-        translateToRussian(snapshot.data!.location!.country.toString());
+    Future<String?> city = lastData.then((res) => res.city);
+    Future<String?> country = lastData.then((res) => res.country);
 
-    return FutureBuilder<List<Translation>>(
+    return FutureBuilder<List<dynamic>>(
         future: Future.wait([city, country]),
         builder: (context, snapshot2) {
           if (snapshot2.hasData) {
@@ -27,7 +27,7 @@ class CityView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "${_city.text}, ${_country.text}",
+                      "${_city}, ${_country}",
                       style: TextStyle(fontSize: 35),
                     ),
                   ],

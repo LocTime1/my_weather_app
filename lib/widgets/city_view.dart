@@ -7,13 +7,13 @@ import 'package:translator/translator.dart';
 
 class CityView extends StatelessWidget {
   final AsyncSnapshot<WeatherForecast> snapshot;
-  final Future<LastData> lastData;
+  final Future<LastData?> lastData;
   CityView({super.key, required this.snapshot, required this.lastData});
 
   @override
   Widget build(BuildContext context) {
-    Future<String?> city = lastData.then((res) => res.city);
-    Future<String?> country = lastData.then((res) => res.country);
+    Future<String?> city = lastData.then((res) => res!.city);
+    Future<String?> country = lastData.then((res) => res!.country);
 
     return FutureBuilder<List<dynamic>>(
         future: Future.wait([city, country]),
@@ -35,7 +35,10 @@ class CityView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(snapshot.data!.location!.localtime.toString(), style: TextStyle(fontSize: 24),)
+                    Text(
+                      snapshot.data!.location!.localtime.toString(),
+                      style: TextStyle(fontSize: 24),
+                    )
                   ],
                 ),
               ],
@@ -48,12 +51,12 @@ class CityView extends StatelessWidget {
         });
   }
 
-  Future<Translation> translateToRussian(String sourceText) async {
-    print('AAA');
-    final translator = GoogleTranslator();
-    var textOnRussian =
-        await translator.translate(sourceText, from: 'en', to: 'ru');
-    print(textOnRussian.text);
-    return textOnRussian;
-  }
+  // Future<Translation> translateToRussian(String sourceText) async {
+  //   print('AAA');
+  //   final translator = GoogleTranslator();
+  //   var textOnRussian =
+  //       await translator.translate(sourceText, from: 'en', to: 'ru');
+  //   print(textOnRussian.text);
+  //   return textOnRussian;
+  // }
 }

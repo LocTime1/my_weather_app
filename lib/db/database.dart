@@ -32,19 +32,28 @@ class DBProvider {
         'CREATE TABLE $table($columnId INTEGER PRIMARY KEY AUTOINCREMENT, $columnLat REAL, $columnLong REAL, $columnCity STRING, $columnCountry STRING)');
   }
 
-  Future<LastData> getLastData() async {
+  Future<LastData?> getLastData() async {
     Database db = await database;
     final List<Map<String, dynamic>> dataMapList = await db.query(table);
     final List<LastData> dataList = [];
     dataMapList.forEach((dataMap) {
       dataList.add(LastData.fromMap(dataMap));
     });
-    return dataList[dataList.length-1];
+    if (dataList.length != 0) {
+      return dataList[dataList.length - 1];
+    } else {
+      return null;
+    }
   }
 
   Future<LastData> insertData(LastData lastData) async {
     Database db = await database;
     lastData.id = await db.insert(table, lastData.toMap());
     return lastData;
+  }
+
+  void deleteAll() async {
+    final db = await database;
+    db.delete(table);
   }
 }

@@ -5,6 +5,7 @@ import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/model/last_data.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
 import 'package:my_weather_app/widgets/city_view.dart';
+import 'package:translator/translator.dart';
 
 class HomeScreen extends StatefulWidget {
   Future<WeatherForecast>? forecastData;
@@ -15,12 +16,23 @@ class HomeScreen extends StatefulWidget {
 
 class _MainScreenState extends State<HomeScreen> {
   late Future<WeatherForecast> forecast;
+  late Future<LastData?> myFutureLastData;
+  late LastData? myLastData;
+  String? city;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
+    print(1234);
     if (widget.forecastData != null) {
+      print(12345);
       forecast = Future.value(widget.forecastData);
+      myLastData = await DBProvider.db.getLastData();
+      print(myLastData);
+      print("AAAA");
+      if (myLastData != null) {
+        print("Хуй");
+      }
     }
   }
 
@@ -50,12 +62,21 @@ class _MainScreenState extends State<HomeScreen> {
                       future: forecast,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          DBProvider.db.insertData(LastData(
-                              lat: snapshot.data!.location!.lat,
-                              long: snapshot.data!.location!.lon,
-                              city: snapshot.data!.location!.name,
-                              country: snapshot.data!.location!.country));
-                          return CityView(snapshot: snapshot, lastData: DBProvider.db.getLastData(),);
+                          // if (snapshot.data?[1] == null) {
+                          //   DBProvider.db.insertData(LastData(
+                          //       lat: snapshot.data![0].location!.lat,
+                          //       long: snapshot.data![0].location!.lon,
+                          //       city: translateToRussian(
+                          //               snapshot.data[0]!.location!.name)
+                          //           .then((val) {
+                          //         return val;
+                          //       }),
+                          //       country: snapshot.data!.location!.country));
+                          // }
+                          return CityView(
+                            snapshot: snapshot,
+                            lastData: DBProvider.db.getLastData(),
+                          );
                         } else {
                           return Center(
                               child: Container(
@@ -70,5 +91,14 @@ class _MainScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  Future<String> translateToRussian(String sourceText) async {
+    print('AAA');
+    final translator = GoogleTranslator();
+    var textOnRussian =
+        await translator.translate(sourceText, from: 'en', to: 'ru');
+    print(textOnRussian.text);
+    return textOnRussian.text;
   }
 }

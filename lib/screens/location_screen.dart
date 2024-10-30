@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:my_weather_app/API/weather_api.dart';
 import 'package:my_weather_app/db/database.dart';
-import 'package:my_weather_app/model/last_data.dart';
 import 'package:my_weather_app/screens/home_screen.dart';
 
 class LocationScreen extends StatefulWidget {
@@ -36,7 +35,6 @@ class _LocScreenState extends State<LocationScreen> {
         return;
       }
     }
-    DBProvider.db.deleteAll();
     var last = await DBProvider.db.getLastData();
     if (last == null) {
       print("Данных нет!");
@@ -49,7 +47,6 @@ class _LocScreenState extends State<LocationScreen> {
       long = last.long;
     }
     var _forecast = WeatherApi().fetchWeather('${lat},${long}');
-    // var _forecast = WeatherApi().fetchWeather("London");
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return HomeScreen(
         forecastData: _forecast,

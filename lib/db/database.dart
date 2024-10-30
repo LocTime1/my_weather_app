@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:my_weather_app/model/last_data.dart';
+import 'package:my_weather_app/models/last_data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/screens/location_screen.dart';
 
-
 void main() async {
-   runApp(MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -14,7 +13,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -22,9 +20,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LocationScreen()
-    );
+    return const MaterialApp(home: LocationScreen());
   }
 }
-

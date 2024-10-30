@@ -1,12 +1,11 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:my_weather_app/model/last_data.dart';
+import 'package:my_weather_app/models/last_data.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
-import 'package:translator/translator.dart';
 
 class CityView extends StatelessWidget {
-  final AsyncSnapshot<WeatherForecast> snapshot;
+  final WeatherForecast snapshot;
   final Future<LastData?> lastData;
   CityView({super.key, required this.snapshot, required this.lastData});
 
@@ -36,7 +35,7 @@ class CityView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      snapshot.data!.location!.localtime.toString(),
+                      snapshot.location!.localtime.toString(),
                       style: TextStyle(fontSize: 24),
                     )
                   ],

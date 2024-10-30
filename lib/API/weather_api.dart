@@ -4,7 +4,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:my_weather_app/db/database.dart';
+import 'package:my_weather_app/models/last_data.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
+import 'package:translator/translator.dart';
 
 class WeatherApi {
   Future<WeatherForecast> fetchWeather(String locationDevice) async {
@@ -21,9 +24,30 @@ class WeatherApi {
       HttpHeaders.contentTypeHeader: 'application/json; charset=utf-16'
     });
     if (response.statusCode == 200) {
-      return WeatherForecast.fromJson(json.decode(utf8.decode(response.bodyBytes)));
+      var futureForecast = WeatherForecast.fromJson(
+          json.decode(utf8.decode(response.bodyBytes)));
+      var lastData = await DBProvider.db.getLastData();
+      if (lastData == null) {
+        String city = await translateToRussian(futureForecast.location!.name!);
+        String country =
+            await translateToRussian(futureForecast.location!.country!);
+        DBProvider.db.insertData(LastData(
+            lat: futureForecast.location!.lat,
+            long: futureForecast.location!.lon,
+            city: city,
+            country: country));
+      }
+      return futureForecast;
     } else {
       return Future.error('Error response');
     }
+  }
+
+  Future<String> translateToRussian(String sourceText) async {
+    final translator = GoogleTranslator();
+    var textOnRussian =
+        await translator.translate(sourceText, from: 'en', to: 'ru');
+    print(textOnRussian.text);
+    return textOnRussian.text;
   }
 }

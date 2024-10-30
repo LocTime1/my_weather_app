@@ -1,9 +1,10 @@
-// ignore_for_file: must_be_immutable, prefer_const_constructors
+// ignore_for_file: must_be_immutable, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
 import 'package:my_weather_app/widgets/city_view.dart';
+import 'package:my_weather_app/widgets/my_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
   Future<WeatherForecast>? forecastData;
@@ -26,22 +27,11 @@ class _MainScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Погода'),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 60, 193, 255),
-        automaticallyImplyLeading: false,
-      ),
       body: Container(
         color: Color.fromARGB(255, 60, 193, 255),
         child: Column(
           children: [
-            Divider(
-              color: Colors.black,
-              indent: 15,
-              endIndent: 15,
-              thickness: 0.4,
-            ),
+            MyAppbar(),
             Expanded(
               child: ListView(
                 children: [

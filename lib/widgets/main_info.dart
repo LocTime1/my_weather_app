@@ -68,9 +68,18 @@ class MainInfo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Image.network(
-                                    "https:${snapshot.current!.condition!.icon}",
-                                    scale: 0.8)
+                                Icon(
+                                  Icons.cloud,
+                                  size: 80,
+                                ),
+                                Text(
+                                  "${snapshot.current!.condition!.text}",
+                                  style: TextStyle(color: Colors.white),
+                                )
+
+                                // Image.network(
+                                //     "https:${snapshot.current!.condition!.icon}",
+                                //     scale: 0.5)
                               ],
                             )
                           ],

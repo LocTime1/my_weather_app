@@ -28,10 +28,9 @@ class _MainScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color.fromARGB(255, 60, 193, 255),
+        // color: Color.fromARGB(255, 60, 193, 255),
         child: Column(
           children: [
-            MyAppbar(),
             Expanded(
               child: ListView(
                 children: [
@@ -39,9 +38,14 @@ class _MainScreenState extends State<HomeScreen> {
                       future: forecast,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return CityView(
-                            snapshot: snapshot.data!,
-                            lastData: DBProvider.db.getLastData(),
+                          return Column(
+                            children: [
+                              MyAppbar(lastData: DBProvider.db.getLastData()),
+                              CityView(
+                                snapshot: snapshot.data!,
+                                lastData: DBProvider.db.getLastData(),
+                              ),
+                            ],
                           );
                         } else {
                           return Center(

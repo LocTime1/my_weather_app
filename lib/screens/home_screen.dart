@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
-import 'package:my_weather_app/widgets/city_view.dart';
+import 'package:my_weather_app/widgets/main_info.dart';
 import 'package:my_weather_app/widgets/my_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,10 +41,10 @@ class _MainScreenState extends State<HomeScreen> {
                           return Column(
                             children: [
                               MyAppbar(lastData: DBProvider.db.getLastData()),
-                              CityView(
+                              MainInfo(
                                 snapshot: snapshot.data!,
                                 lastData: DBProvider.db.getLastData(),
-                              ),
+                              )
                             ],
                           );
                         } else {

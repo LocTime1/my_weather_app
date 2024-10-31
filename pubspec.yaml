@@ -72,7 +72,7 @@ flutter:
   assets:
     - assets/icons/my_location.png
     - assets/icons/loupe.png
-    - assets/images/night.jpg
+    - assets/images/night_sky.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

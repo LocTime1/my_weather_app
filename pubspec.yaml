@@ -44,6 +44,7 @@ dependencies:
   path_provider: ^2.1.4
   getwidget: ^4.0.0
   auto_size_text: ^3.0.0
+  auto_size_text_field: ^2.2.4
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,7 @@ flutter:
   assets:
     - assets/icons/my_location.png
     - assets/icons/loupe.png
+    - assets/images/night.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

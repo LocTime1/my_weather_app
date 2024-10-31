@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:my_weather_app/models/last_data.dart';
 
 class MyAppbar extends StatelessWidget {
   final Future<LastData?> lastData;
+  final _textEditingController = TextEditingController();
   MyAppbar({required this.lastData});
   @override
   Widget build(BuildContext context) {
@@ -51,8 +53,11 @@ class MyAppbar extends StatelessWidget {
                     width: size * 0.35,
                     height: height * 0.026,
                     child: TextField(
-                      textAlignVertical: TextAlignVertical(y: -0.5),
-                      style: TextStyle(fontSize: size * 0.03),
+                      maxLines: 1,
+                      controller: _textEditingController,
+                      textAlignVertical: TextAlignVertical.center,
+                      style:
+                          TextStyle(fontSize: 15, overflow: TextOverflow.clip),
                       decoration: InputDecoration(
                         prefixIcon: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
@@ -62,6 +67,8 @@ class MyAppbar extends StatelessWidget {
                         ),
                         prefixIconConstraints:
                             BoxConstraints(maxHeight: height * 0.023),
+                        hintText: "Введите город",
+                        hintStyle: TextStyle(fontSize: height * 0.01),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                             borderSide:

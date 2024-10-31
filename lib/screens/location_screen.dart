@@ -35,7 +35,6 @@ class _LocScreenState extends State<LocationScreen> {
         return;
       }
     }
-    DBProvider.db.deleteAll();
     var last = await DBProvider.db.getLastData();
     if (last == null) {
       print("Данных нет!");

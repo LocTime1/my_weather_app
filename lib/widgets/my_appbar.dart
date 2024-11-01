@@ -27,31 +27,32 @@ class MyAppbar extends StatelessWidget {
                   right: size * 0.03, top: height * 0.005, left: size * 0.03),
               child: Row(
                 children: [
+                  // Container(
+                  //     width: size * 0.335,
+                  //     height: height * 0.026,
+
+                  // child: GFButton(
+                  //   onPressed: () {
+                  //     print("Кнопка нажата");
+                  //   },
+                  //   color: Colors.transparent,
+                  //   borderSide: BorderSide(color: Colors.black, width: 1.0),
+                  //   shape: GFButtonShape.pills,
+                  //   icon: Image.asset(
+                  //     "assets/icons/my_location.png",
+                  //     width: size * 0.056,
+                  //   ),
+                  //   text: "Определить моё\n местоположение",
+                  //   textStyle: TextStyle(
+                  //       fontSize: size * 0.025, color: Colors.black),
+                  // ),
+                  // ),
+                  // SizedBox(
+                  //   width: 10,
+                  // ),
                   Container(
-                    width: size * 0.335,
-                    height: height * 0.026,
-                    child: GFButton(
-                      onPressed: () {
-                        print("Кнопка нажата");
-                      },
-                      color: Colors.transparent,
-                      borderSide: BorderSide(color: Colors.black, width: 1.0),
-                      shape: GFButtonShape.pills,
-                      icon: Image.asset(
-                        "assets/icons/my_location.png",
-                        width: size * 0.056,
-                      ),
-                      text: "Определить моё\n местоположение",
-                      textStyle: TextStyle(
-                          fontSize: size * 0.025, color: Colors.black),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    width: size * 0.35,
-                    height: height * 0.026,
+                    width: size * 0.534,
+                    height: height * 0.0382,
                     child: TextField(
                       maxLines: 1,
                       controller: _textEditingController,
@@ -68,7 +69,9 @@ class MyAppbar extends StatelessWidget {
                         prefixIconConstraints:
                             BoxConstraints(maxHeight: height * 0.023),
                         hintText: "Введите город",
-                        hintStyle: TextStyle(fontSize: height * 0.01),
+                        hintStyle: TextStyle(
+                          fontSize: height * 0.013,
+                        ),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(30)),
                             borderSide:
@@ -81,12 +84,36 @@ class MyAppbar extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: size * 0.032,
+                  ),
+                  Material(
+                      type: MaterialType.transparency,
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          // set the border
+                          border: Border.all(width: 1, color: Colors.black),
+                          // border radius
+                          borderRadius: BorderRadius.circular(100),
+                          // background color
+                        ),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(100.0),
+                          onTap: () {},
+                          child: Padding(
+                              padding: EdgeInsets.all(5),
+                              child: Image.asset(
+                                "assets/icons/my_location.png",
+                                width: size * 0.053,
+                              )),
+                        ),
+                      )),
+                  SizedBox(
+                    width: size * 0.032,
                   ),
                   Expanded(
                     child: AutoSizeText(
                       _city,
-                      style: TextStyle(fontSize: size * 0.05),
+                      style: TextStyle(fontSize: size * 0.18),
                       minFontSize: 1,
                       maxLines: 1,
                     ),

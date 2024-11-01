@@ -28,14 +28,11 @@ class WeatherApi {
           json.decode(utf8.decode(response.bodyBytes)));
       var lastData = await DBProvider.db.getLastData();
       if (lastData == null) {
-        String city = await translateToRussian(futureForecast.location!.name!);
-        String country =
-            await translateToRussian(futureForecast.location!.country!);
         DBProvider.db.insertData(LastData(
-            lat: futureForecast.location!.lat,
-            long: futureForecast.location!.lon,
-            city: city,
-            country: country));
+          lat: futureForecast.location!.lat,
+          long: futureForecast.location!.lon,
+          city: futureForecast.location!.name,
+        ));
       }
       return futureForecast;
     } else {
@@ -43,11 +40,11 @@ class WeatherApi {
     }
   }
 
-  Future<String> translateToRussian(String sourceText) async {
-    final translator = GoogleTranslator();
-    var textOnRussian =
-        await translator.translate(sourceText, from: 'en', to: 'ru');
-    print(textOnRussian.text);
-    return textOnRussian.text;
-  }
+  // Future<String> translateToRussian(String sourceText) async {
+  //   final translator = GoogleTranslator();
+  //   var textOnRussian =
+  //       await translator.translate(sourceText, from: 'en', to: 'ru');
+  //   print(textOnRussian.text);
+  //   return textOnRussian.text;
+  // }
 }

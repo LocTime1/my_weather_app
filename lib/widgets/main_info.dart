@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers, prefer_const_constructors
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/constans.dart';
 import 'package:my_weather_app/models/last_data.dart';
@@ -24,9 +25,9 @@ class MainInfo extends StatelessWidget {
             var _city = snapshot2.data!;
             return Padding(
               padding: EdgeInsets.only(
-                  top: 20, left: size * 0.03, right: size * 0.03),
+                  top: height * 0.0382, left: size * 0.03, right: size * 0.03),
               child: Container(
-                  height: height * 0.22,
+                  height: height * 0.29,
                   width: size,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(21),
@@ -35,35 +36,57 @@ class MainInfo extends StatelessWidget {
                           image: AssetImage("assets/images/night_sky.jpg"))),
                   child: Padding(
                     padding: EdgeInsets.symmetric(
-                        horizontal: size * 0.085, vertical: height * 0.022),
+                        horizontal: size * 0.03, vertical: height * 0.022),
                     child: Column(
                       // Всё что в котейнере
                       children: [
                         Row(
                           // Всё кроме нижней строчки
                           children: [
-                            Column(
-                              // Температура
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "В $_city сейчас:",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                Text(
-                                    snapshot.current!.tempC! > 0
-                                        ? "+${snapshot.current!.tempC!.round()}°"
-                                        : "${snapshot.current!.tempC!.round()}°",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: height * 0.055)),
-                                Text(
-                                  snapshot.current!.feelslikeC! > 0
-                                      ? "ощущается как: +${snapshot.current!.feelslikeC!.round()}°"
-                                      : "ощущается как: ${snapshot.current!.feelslikeC!.round()}°",
-                                  style: TextStyle(color: Colors.white),
-                                )
-                              ],
+                            Container(
+                              width: size * 0.41,
+                              height: height * 0.165,
+                              child: Column(
+                                // Температура
+                                crossAxisAlignment: CrossAxisAlignment.start,
+
+                                children: [
+                                  SizedBox(
+                                    width: size * 0.41,
+                                    child: AutoSizeText(
+                                      "В $_city сейчас:",
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: size * 0.06),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: size * 0.41,
+                                    height: height * 0.1,
+                                    child: AutoSizeText(
+                                        snapshot.current!.tempC! > 0
+                                            ? "+${snapshot.current!.tempC!.round()}°"
+                                            : "${snapshot.current!.tempC!.round()}°",
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: height * 0.1)),
+                                  ),
+                                  SizedBox(
+                                    width: size * 0.41,
+                                    child: AutoSizeText(
+                                      maxLines: 1,
+                                      snapshot.current!.feelslikeC! > 0
+                                          ? "ощущается как: +${snapshot.current!.feelslikeC!.round()}°"
+                                          : "ощущается как: ${snapshot.current!.feelslikeC!.round()}°",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: size * 0.06),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                             Row(
                               children: [
@@ -73,72 +96,83 @@ class MainInfo extends StatelessWidget {
                                           snapshot.current!.condition!.text]!
                                       : night_icon[
                                           snapshot.current!.condition!.text]!,
-                                  height: size * 0.13,
-                                  width: size * 0.13,
+                                  height: size * 0.177,
+                                  width: size * 0.177,
                                 ),
-                                Text(
-                                  "${snapshot.current!.condition!.text}",
-                                  style: TextStyle(color: Colors.white),
+                                Container(
+                                  height: size * 0.177,
+                                  width: size * 0.286,
+                                  padding: EdgeInsets.only(top: size * 0.02),
+                                  child: AutoSizeText(
+                                    maxLines: 2,
+                                    "${snapshot.current!.condition!.text}",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: size * 0.05),
+                                  ),
                                 )
-
-                                // Image.network(
-                                //     "https:${snapshot.current!.condition!.icon}",
-                                //     scale: 0.5)
                               ],
                             )
                           ],
                         ),
                         SizedBox(
-                          height: 19,
+                          height: height * 0.017,
                         ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              "assets/icons/wind.png",
-                              height: size * 0.065,
-                              width: size * 0.065,
-                            ),
-                            SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              "${snapshot.current!.windKph!}",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                            SizedBox(
-                              width: 25,
-                            ),
-                            Image.asset(
-                              "assets/icons/water.png",
-                              height: size * 0.065,
-                              width: size * 0.065,
-                            ),
-                            SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              "${snapshot.current!.humidity!}%",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                            SizedBox(
-                              width: 25,
-                            ),
-                            Image.asset(
-                              "assets/icons/pressure.png",
-                              height: size * 0.065,
-                              width: size * 0.065,
-                            ),
-                            SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              "${(snapshot.current!.pressureMb! * 0.750064).round()}мм.рт.",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ],
+                        Container(
+                          width: size * 0.838,
+                          height: height * 0.0625,
+                          color: Colors.red,
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/icons/wind.png",
+                                scale: 0.7,
+                                height: height * 0.0625,
+                              ),
+                              SizedBox(
+                                width: size * 0.1,
+                                child: AutoSizeText(
+                                  maxLines: 1,
+                                  "${snapshot.current!.windKph!}",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: size * 0.05),
+                                ),
+                              ),
+                              SizedBox(
+                                width: size * 0.05,
+                              ),
+                              Image.asset(
+                                "assets/icons/water.png",
+                                scale: 0.7,
+                                height: height * 0.0625,
+                              ),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              Text(
+                                "${snapshot.current!.humidity!}%",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              Image.asset(
+                                "assets/icons/pressure.png",
+                                scale: 0.7,
+                                height: height * 0.0625,
+                              ),
+                              SizedBox(
+                                width: 7,
+                              ),
+                              Text(
+                                "${(snapshot.current!.pressureMb! * 0.750064).round()}мм.рт.",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),

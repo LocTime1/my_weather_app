@@ -1,13 +1,13 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:my_weather_app/constans.dart';
 import 'package:my_weather_app/models/last_data.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
 
 class MainInfo extends StatelessWidget {
   final WeatherForecast snapshot;
   final Future<LastData?> lastData;
-  final _textEditingController = TextEditingController();
   MainInfo({super.key, required this.snapshot, required this.lastData});
 
   @override
@@ -17,12 +17,11 @@ class MainInfo extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double size = MediaQuery.of(context).size.width;
 
-    return FutureBuilder<List<dynamic>>(
-        future: Future.wait([city, country]),
+    return FutureBuilder(
+        future: city,
         builder: (context, snapshot2) {
           if (snapshot2.hasData) {
-            var _city = snapshot2.data![0];
-            var _country = snapshot2.data![1];
+            var _city = snapshot2.data!;
             return Padding(
               padding: EdgeInsets.only(
                   top: 20, left: size * 0.03, right: size * 0.03),
@@ -68,9 +67,14 @@ class MainInfo extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Icon(
-                                  Icons.cloud,
-                                  size: 80,
+                                Image.asset(
+                                  snapshot.current!.isDay == 1
+                                      ? day_icon[
+                                          snapshot.current!.condition!.text]!
+                                      : night_icon[
+                                          snapshot.current!.condition!.text]!,
+                                  height: size * 0.13,
+                                  width: size * 0.13,
                                 ),
                                 Text(
                                   "${snapshot.current!.condition!.text}",
@@ -84,6 +88,58 @@ class MainInfo extends StatelessWidget {
                             )
                           ],
                         ),
+                        SizedBox(
+                          height: 19,
+                        ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              "assets/icons/wind.png",
+                              height: size * 0.065,
+                              width: size * 0.065,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              "${snapshot.current!.windKph!}",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            Image.asset(
+                              "assets/icons/water.png",
+                              height: size * 0.065,
+                              width: size * 0.065,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              "${snapshot.current!.humidity!}%",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            Image.asset(
+                              "assets/icons/pressure.png",
+                              height: size * 0.065,
+                              width: size * 0.065,
+                            ),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Text(
+                              "${(snapshot.current!.pressureMb! * 0.750064).round()}мм.рт.",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ],
+                        )
                       ],
                     ),
                   )),

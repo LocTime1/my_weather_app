@@ -73,6 +73,11 @@ flutter:
     - assets/icons/my_location.png
     - assets/icons/loupe.png
     - assets/images/night_sky.jpg
+    - assets/icons/weather/day/
+    - assets/icons/weather/night/
+    - assets/icons/water.png
+    - assets/icons/pressure.png
+    - assets/icons/wind.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

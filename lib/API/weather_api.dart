@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/last_data.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
-import 'package:translator/translator.dart';
 
 class WeatherApi {
   Future<WeatherForecast> fetchWeather(String locationDevice) async {

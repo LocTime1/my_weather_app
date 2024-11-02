@@ -14,7 +14,6 @@ class MainInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<String?> city = lastData.then((res) => res!.city);
-    Future<String?> country = lastData.then((res) => res!.country);
     double height = MediaQuery.of(context).size.height;
     double size = MediaQuery.of(context).size.width;
 
@@ -38,7 +37,8 @@ class MainInfo extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                         horizontal: size * 0.03, vertical: height * 0.022),
                     child: Column(
-                      // Всё что в котейнере
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start, // Всё что в котейнере
                       children: [
                         Row(
                           // Всё кроме нижней строчки
@@ -97,18 +97,19 @@ class MainInfo extends StatelessWidget {
                                       : night_icon[
                                           snapshot.current!.condition!.text]!,
                                   height: size * 0.177,
-                                  width: size * 0.177,
                                 ),
-                                Container(
+                                SizedBox(
                                   height: size * 0.177,
                                   width: size * 0.286,
-                                  padding: EdgeInsets.only(top: size * 0.02),
-                                  child: AutoSizeText(
-                                    maxLines: 2,
-                                    "${snapshot.current!.condition!.text}",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: size * 0.05),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: AutoSizeText(
+                                      maxLines: 2,
+                                      "${snapshot.current!.condition!.text}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: size * 0.05),
+                                    ),
                                   ),
                                 )
                               ],
@@ -118,62 +119,10 @@ class MainInfo extends StatelessWidget {
                         SizedBox(
                           height: height * 0.017,
                         ),
-                        Container(
-                          width: size * 0.838,
-                          height: height * 0.0625,
-                          color: Colors.red,
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                "assets/icons/wind.png",
-                                scale: 0.7,
-                                height: height * 0.0625,
-                              ),
-                              SizedBox(
-                                width: size * 0.1,
-                                child: AutoSizeText(
-                                  maxLines: 1,
-                                  "${snapshot.current!.windKph!}",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: size * 0.05),
-                                ),
-                              ),
-                              SizedBox(
-                                width: size * 0.05,
-                              ),
-                              Image.asset(
-                                "assets/icons/water.png",
-                                scale: 0.7,
-                                height: height * 0.0625,
-                              ),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              Text(
-                                "${snapshot.current!.humidity!}%",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16),
-                              ),
-                              SizedBox(
-                                width: 25,
-                              ),
-                              Image.asset(
-                                "assets/icons/pressure.png",
-                                scale: 0.7,
-                                height: height * 0.0625,
-                              ),
-                              SizedBox(
-                                width: 7,
-                              ),
-                              Text(
-                                "${(snapshot.current!.pressureMb! * 0.750064).round()}мм.рт.",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16),
-                              ),
-                            ],
-                          ),
-                        )
+                        BottomLine(
+                            windKph: snapshot.current!.windKph!,
+                            humidity: snapshot.current!.humidity!,
+                            pressureMb: snapshot.current!.pressureMb!)
                       ],
                     ),
                   )),
@@ -184,5 +133,75 @@ class MainInfo extends StatelessWidget {
             );
           }
         });
+  }
+}
+
+class BottomLine extends StatelessWidget {
+  final double windKph;
+  final int humidity;
+  final double pressureMb;
+  const BottomLine(
+      {super.key,
+      required this.windKph,
+      required this.humidity,
+      required this.pressureMb});
+
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double size = MediaQuery.of(context).size.width;
+    return Container(
+      width: size * 0.938,
+      height: height * 0.0625,
+      child: Row(
+        children: [
+          Image.asset(
+            "assets/icons/wind.png",
+            scale: 0.7,
+            height: height * 0.0525,
+          ),
+          SizedBox(
+            height: height * 0.025,
+            child: AutoSizeText(
+              "$windKph м/с",
+              maxLines: 1,
+              style: TextStyle(color: Colors.white, fontSize: size * 0.05),
+            ),
+          ),
+          SizedBox(
+            width: size * 0.03,
+          ),
+          Image.asset(
+            "assets/icons/water.png",
+            scale: 0.7,
+            height: height * 0.0525,
+          ),
+          SizedBox(
+            height: height * 0.025,
+            child: AutoSizeText(
+              maxLines: 1,
+              "$humidity%",
+              style: TextStyle(color: Colors.white, fontSize: size * 0.05),
+            ),
+          ),
+          SizedBox(
+            width: size * 0.03,
+          ),
+          Image.asset(
+            "assets/icons/pressure.png",
+            scale: 0.7,
+            height: height * 0.0525,
+          ),
+          SizedBox(
+            height: height * 0.025,
+            child: AutoSizeText(
+              "${(pressureMb * 0.750064).round()}мм.рт.ст.",
+              maxLines: 1,
+              style: TextStyle(color: Colors.white, fontSize: size * 0.05),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 
 class _MainScreenState extends State<HomeScreen> {
   late Future<WeatherForecast> forecast;
-
   @override
   void initState() {
     super.initState();
@@ -44,7 +43,7 @@ class _MainScreenState extends State<HomeScreen> {
                               MainInfo(
                                 snapshot: snapshot.data!,
                                 lastData: DBProvider.db.getLastData(),
-                              )
+                              ),
                             ],
                           );
                         } else {

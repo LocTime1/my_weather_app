@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
+import 'package:my_weather_app/widgets/graf.dart';
 import 'package:my_weather_app/widgets/main_info.dart';
 import 'package:my_weather_app/widgets/my_appbar.dart';
 
@@ -44,6 +45,7 @@ class _MainScreenState extends State<HomeScreen> {
                                 snapshot: snapshot.data!,
                                 lastData: DBProvider.db.getLastData(),
                               ),
+                              Graf()
                             ],
                           );
                         } else {

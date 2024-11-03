@@ -46,6 +46,7 @@ dependencies:
   auto_size_text: ^3.0.0
   auto_size_text_field: ^2.2.4
   dropdown_search: ^6.0.1
+  syncfusion_flutter_charts: ^27.1.57
 
 dev_dependencies:
   flutter_test:

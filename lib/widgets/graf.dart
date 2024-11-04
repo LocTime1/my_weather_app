@@ -1,5 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Graf extends StatefulWidget {
   const Graf({super.key});
@@ -16,25 +18,25 @@ class _GrafState extends State<Graf> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: SfCartesianChart(
-            primaryXAxis: CategoryAxis(),
-            // Chart title
-
-            series: <LineSeries<HourWeather, String>>[
-          LineSeries<HourWeather, String>(
-              dataSource: <HourWeather>[
-                HourWeather("0", 1),
-                HourWeather("1", -1),
-                HourWeather("02", 4),
-                HourWeather("03", 5),
-                HourWeather("04", 10),
-              ],
-              xValueMapper: (HourWeather hourWeather, _) => hourWeather.hour,
-              yValueMapper: (HourWeather hourWeather, _) => hourWeather.temp,
-              // Enable data label
-              dataLabelSettings: DataLabelSettings(isVisible: true))
-        ]));
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+          padding: EdgeInsets.all(10),
+          width: 700,
+          height: 200,
+          child: LineChart(
+            LineChartData(
+                titlesData: FlTitlesData(
+                    topTitles:
+                        AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    rightTitles:
+                        AxisTitles(sideTitles: SideTitles(showTitles: false))),
+                lineBarsData: [
+                  LineChartBarData(
+                      spots: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(4, 5)])
+                ]),
+          )),
+    );
   }
 }
 

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
-import 'package:my_weather_app/widgets/graf.dart';
+import 'package:my_weather_app/widgets/hourForecast.dart';
 import 'package:my_weather_app/widgets/main_info.dart';
 import 'package:my_weather_app/widgets/my_appbar.dart';
 
@@ -38,6 +38,16 @@ class _MainScreenState extends State<HomeScreen> {
                       future: forecast,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
+                          List<double> temp = [];
+                          snapshot.data!.forecast!.forecastday!.forEach((v) =>
+                              v.hour!.forEach((i) => temp.add(i.tempC!)));
+                          List<String> icons = [];
+                          snapshot.data!.forecast!.forecastday!.forEach((v) => v
+                              .hour!
+                              .forEach((i) => icons.add(i.condition!.text!)));
+                          List<int> listIsDay = [];
+                          snapshot.data!.forecast!.forecastday!.forEach((v) =>
+                              v.hour!.forEach((i) => listIsDay.add(i.isDay!)));
                           return Column(
                             children: [
                               MyAppbar(lastData: DBProvider.db.getLastData()),
@@ -45,7 +55,12 @@ class _MainScreenState extends State<HomeScreen> {
                                 snapshot: snapshot.data!,
                                 lastData: DBProvider.db.getLastData(),
                               ),
-                              Graf()
+                              HourForecast(
+                                temp: temp,
+                                icons: icons,
+                                listIsDay: listIsDay,
+                                dateTime: snapshot.data!.location!.localtime!,
+                              )
                             ],
                           );
                         } else {

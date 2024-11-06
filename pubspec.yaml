@@ -43,6 +43,7 @@ dependencies:
   getwidget: ^4.0.0
   auto_size_text: ^3.0.0
   stream_chat_flutter: ^8.1.0
+  page_transition: ^2.1.0
 
 dev_dependencies:
   flutter_test:

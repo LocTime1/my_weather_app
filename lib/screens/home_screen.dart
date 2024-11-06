@@ -7,6 +7,7 @@ import 'package:my_weather_app/models/weather_forecast.dart';
 import 'package:my_weather_app/widgets/hourForecast.dart';
 import 'package:my_weather_app/widgets/main_info.dart';
 import 'package:my_weather_app/widgets/my_appbar.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
   Future<WeatherForecast>? forecastData;
@@ -29,67 +30,68 @@ class _MainScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: _pullRefresh,
-        child: Container(
-          // color: Color.fromARGB(255, 60, 193, 255),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    FutureBuilder(
-                        future: forecast,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<double> temp = [];
-                            snapshot.data!.forecast!.forecastday!.forEach((v) =>
-                                v.hour!.forEach((i) => temp.add(i.tempC!)));
-                            List<String> icons = [];
-                            snapshot.data!.forecast!.forecastday!.forEach((v) =>
-                                v.hour!.forEach(
-                                    (i) => icons.add(i.condition!.text!)));
-                            List<int> listIsDay = [];
-                            snapshot.data!.forecast!.forecastday!.forEach((v) =>
-                                v.hour!
-                                    .forEach((i) => listIsDay.add(i.isDay!)));
-                            return Column(
-                              children: [
-                                MyAppbar(lastData: DBProvider.db.getLastData()),
-                                MainInfo(
-                                  snapshot: snapshot.data!,
-                                  lastData: DBProvider.db.getLastData(),
-                                ),
-                                HourForecast(
-                                  temp: temp,
-                                  icons: icons,
-                                  listIsDay: listIsDay,
-                                  dateTime: snapshot.data!.location!.localtime!,
-                                )
-                              ],
-                            );
-                          } else {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        })
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+          onRefresh: _pullRefresh,
+          child: FutureBuilder(
+              future: forecast,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<double> temp = [];
+                  snapshot.data!.forecast!.forecastday!.forEach(
+                      (v) => v.hour!.forEach((i) => temp.add(i.tempC!)));
+                  List<String> icons = [];
+                  snapshot.data!.forecast!.forecastday!.forEach((v) =>
+                      v.hour!.forEach((i) => icons.add(i.condition!.text!)));
+                  List<int> listIsDay = [];
+                  snapshot.data!.forecast!.forecastday!.forEach(
+                      (v) => v.hour!.forEach((i) => listIsDay.add(i.isDay!)));
+                  return Container(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              Column(
+                                children: [
+                                  MyAppbar(
+                                      lastData: DBProvider.db.getLastData()),
+                                  MainInfo(
+                                    snapshot: snapshot.data!,
+                                    lastData: DBProvider.db.getLastData(),
+                                  ),
+                                  HourForecast(
+                                    temp: temp,
+                                    icons: icons,
+                                    listIsDay: listIsDay,
+                                    dateTime:
+                                        snapshot.data!.location!.localtime!,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              })),
     );
   }
 
   Future<void> _pullRefresh() async {
     var val = await DBProvider.db.getLastData();
     var _forecast = WeatherApi().fetchWeather(val!.city!);
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return HomeScreen(
-        forecastData: _forecast,
-      );
-    }));
+    Navigator.push(
+        context,
+        PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: HomeScreen(
+              forecastData: _forecast,
+            )));
   }
 }

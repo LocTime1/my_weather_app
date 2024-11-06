@@ -5,6 +5,7 @@ import 'package:location/location.dart';
 import 'package:my_weather_app/API/weather_api.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/screens/home_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({super.key});
@@ -47,11 +48,15 @@ class _LocScreenState extends State<LocationScreen> {
       long = last.long;
     }
     var _forecast = WeatherApi().fetchWeather('${lat},${long}');
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return HomeScreen(
-        forecastData: _forecast,
-      );
-    }));
+
+    Navigator.push(
+        context,
+        PageTransition(
+            type: PageTransitionType.size,
+            alignment: Alignment.bottomCenter,
+            child: HomeScreen(
+              forecastData: _forecast,
+            )));
   }
 
   @override

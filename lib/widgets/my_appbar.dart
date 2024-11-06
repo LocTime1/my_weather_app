@@ -7,6 +7,7 @@ import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/last_data.dart';
 import 'package:my_weather_app/screens/home_screen.dart';
 import 'package:my_weather_app/screens/location_screen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MyAppbar extends StatelessWidget {
   final Future<LastData?> lastData;
@@ -64,12 +65,14 @@ class MyAppbar extends StatelessWidget {
                           DBProvider.db.deleteAll();
                           var _forecast =
                               WeatherApi().fetchWeather(value.toLowerCase());
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return HomeScreen(
-                              forecastData: _forecast,
-                            );
-                          }));
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.size,
+                                  alignment: Alignment.bottomCenter,
+                                  child: HomeScreen(
+                                    forecastData: _forecast,
+                                  )));
                         },
                         textAlignVertical: TextAlignVertical.center,
                         style: TextStyle(
@@ -118,10 +121,12 @@ class MyAppbar extends StatelessWidget {
                           borderRadius: BorderRadius.circular(100.0),
                           onTap: () {
                             DBProvider.db.deleteAll();
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return LocationScreen();
-                            }));
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.size,
+                                    alignment: Alignment.bottomCenter,
+                                    child: LocationScreen()));
                           },
                           child: Padding(
                               padding: EdgeInsets.all(5),

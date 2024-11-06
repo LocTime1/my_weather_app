@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_weather_app/API/weather_api.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
+import 'package:my_weather_app/widgets/forecast_week.dart';
 import 'package:my_weather_app/widgets/hourForecast.dart';
 import 'package:my_weather_app/widgets/main_info.dart';
 import 'package:my_weather_app/widgets/my_appbar.dart';
@@ -64,6 +65,9 @@ class _MainScreenState extends State<HomeScreen> {
                                     listIsDay: listIsDay,
                                     dateTime:
                                         snapshot.data!.location!.localtime!,
+                                  ),
+                                  ForecastWeek(
+                                    forecast: forecast,
                                   )
                                 ],
                               ),

@@ -53,11 +53,9 @@ class _MainScreenState extends State<HomeScreen> {
                             children: [
                               Column(
                                 children: [
-                                  MyAppbar(
-                                      lastData: DBProvider.db.getLastData()),
+                                  MyAppbar(),
                                   MainInfo(
                                     snapshot: snapshot.data!,
-                                    lastData: DBProvider.db.getLastData(),
                                   ),
                                   HourForecast(
                                     temp: temp,

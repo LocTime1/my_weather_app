@@ -4,26 +4,22 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/API/weather_api.dart';
 import 'package:my_weather_app/db/database.dart';
-import 'package:my_weather_app/models/last_data.dart';
 import 'package:my_weather_app/screens/home_screen.dart';
 import 'package:my_weather_app/screens/location_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 class MyAppbar extends StatelessWidget {
-  final Future<LastData?> lastData;
   final _formKey = GlobalKey<FormState>();
 
-  MyAppbar({required this.lastData});
   @override
   Widget build(BuildContext context) {
     double size = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    Future<String?> city = lastData.then((res) => res!.city);
     return FutureBuilder(
-        future: city,
+        future: DBProvider.db.getLastData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            var _city = snapshot.data!;
+            var _city = snapshot.data!.city!;
             return Container(
               // color: Colors.green,
               width: size,

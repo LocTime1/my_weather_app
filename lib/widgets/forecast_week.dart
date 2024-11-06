@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
 import 'package:my_weather_app/screens/another_day_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 class ForecastWeek extends StatelessWidget {
-  Future<WeatherForecast>? forecast;
+  final Future<WeatherForecast>? forecast;
   ForecastWeek({super.key, required this.forecast});
 
   @override
@@ -29,8 +31,8 @@ class ForecastWeek extends StatelessWidget {
 
 class MyCard extends StatelessWidget {
   final int index;
-  Future<WeatherForecast>? forecast;
-  MyCard({super.key, required this.index, required this.forecast});
+  final Future<WeatherForecast>? forecast;
+  const MyCard({super.key, required this.index, required this.forecast});
 
   @override
   Widget build(BuildContext context) {

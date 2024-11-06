@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:my_weather_app/constans.dart';
@@ -46,8 +47,10 @@ class _HourForecastState extends State<HourForecast> {
     double height = MediaQuery.of(context).size.height;
     double size = MediaQuery.of(context).size.width;
     return Container(
-      height: height * 0.2,
+      height: height * 0.1734,
+      width: size * (1 - 0.09),
       alignment: Alignment.center,
+      margin: EdgeInsets.symmetric(horizontal: size * 0.045),
       child: ScrollablePositionedList.builder(
         itemScrollController: _scrollController,
         scrollDirection: Axis.horizontal,
@@ -89,63 +92,87 @@ class MyListTile extends StatelessWidget {
     if (index != int.parse(hour)) {
       return Row(children: [
         Container(
-          width: size * 0.2,
+          width: size * 0.221,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage("assets/images/night_sky.jpg"),
-                  opacity: 0.5),
-              boxShadow: [BoxShadow(color: Colors.black, blurRadius: 3)]),
+                fit: BoxFit.fill,
+                image: AssetImage("assets/images/mini_night.png"),
+              ),
+              boxShadow: [BoxShadow(blurRadius: 4, offset: Offset(0, 3))]),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Image.asset(
                 listIsDay[index] == 1
                     ? day_icon[icons[index]]!
                     : night_icon[icons[index]]!,
-                height: height * 0.08,
+                width: size * 0.1238,
               ),
-              Text(
-                "${temp[index].round()}°",
-                style: TextStyle(fontSize: size * 0.09, color: Colors.white),
+              SizedBox(
+                height: height * 0.0625,
+                child: AutoSizeText(
+                  maxLines: 1,
+                  minFontSize: 1,
+                  "${temp[index].round()}°",
+                  style: TextStyle(fontSize: size * 0.2, color: Colors.white),
+                ),
               ),
-              Text(
-                "$index:00",
-                style: TextStyle(fontSize: size * 0.045, color: Colors.white),
+              SizedBox(
+                height: height * 0.0286,
+                child: AutoSizeText(
+                  maxLines: 1,
+                  minFontSize: 1,
+                  "$index:00",
+                  style: TextStyle(fontSize: size * 0.045, color: Colors.white),
+                ),
               )
             ],
           ),
         ),
         SizedBox(
-          width: 5,
+          width: size * 0.01699,
         )
       ]);
     } else {
       return Row(children: [
         Container(
-          width: size * 0.2,
+          width: size * 0.221,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
                 fit: BoxFit.fill,
                 image: AssetImage("assets/images/night_sky.jpg"),
               ),
-              boxShadow: [BoxShadow(color: Colors.black, blurRadius: 3)]),
+              boxShadow: const [
+                BoxShadow(blurRadius: 4, offset: Offset(0, 3))
+              ]),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Image.asset(
                 listIsDay[index] == 1
                     ? day_icon[icons[index]]!
                     : night_icon[icons[index]]!,
-                height: height * 0.08,
+                width: size * 0.1238,
               ),
-              Text(
-                "${temp[index].round()}°",
-                style: TextStyle(fontSize: size * 0.09, color: Colors.white),
+              SizedBox(
+                height: height * 0.0625,
+                child: AutoSizeText(
+                  maxLines: 1,
+                  minFontSize: 1,
+                  "${temp[index].round()}°",
+                  style: TextStyle(fontSize: size * 0.2, color: Colors.white),
+                ),
               ),
-              Text(
-                "$index:00",
-                style: TextStyle(fontSize: size * 0.045, color: Colors.white),
+              SizedBox(
+                height: height * 0.0286,
+                child: AutoSizeText(
+                  maxLines: 1,
+                  minFontSize: 1,
+                  "$index:00",
+                  style: TextStyle(fontSize: size * 0.045, color: Colors.white),
+                ),
               )
             ],
           ),

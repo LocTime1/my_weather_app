@@ -52,7 +52,6 @@ class _MainScreenState extends State<AnotherDayScreen> {
                             children: [
                               MainInfo(
                                 snapshot: snapshot.data!,
-                                lastData: DBProvider.db.getLastData(),
                               ),
                               HourForecast(
                                 temp: temp,

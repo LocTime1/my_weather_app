@@ -3,31 +3,29 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:my_weather_app/constans.dart';
-import 'package:my_weather_app/models/last_data.dart';
+import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
 
 class MainInfo extends StatelessWidget {
   final WeatherForecast snapshot;
-  final Future<LastData?> lastData;
-  MainInfo({super.key, required this.snapshot, required this.lastData});
+  MainInfo({super.key, required this.snapshot});
 
   @override
   Widget build(BuildContext context) {
-    Future<String?> city = lastData.then((res) => res!.city);
     double height = MediaQuery.of(context).size.height;
     double size = MediaQuery.of(context).size.width;
 
     return FutureBuilder(
-        future: city,
+        future: DBProvider.db.getLastData(),
         builder: (context, snapshot2) {
           if (snapshot2.hasData) {
-            var _city = snapshot2.data!;
+            var _city = snapshot2.data!.city!;
             return Padding(
               padding: EdgeInsets.only(
-                  top: height * 0.0382,
+                  top: height * 0.0282,
                   left: size * 0.03,
                   right: size * 0.03,
-                  bottom: height * 0.0382),
+                  bottom: height * 0.0282),
               child: Container(
                   height: height * 0.29,
                   width: size,
@@ -103,10 +101,11 @@ class MainInfo extends StatelessWidget {
                                 ),
                                 SizedBox(
                                   height: size * 0.177,
-                                  width: size * 0.286,
+                                  width: size * 0.28,
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: AutoSizeText(
+                                      minFontSize: 2,
                                       maxLines: 2,
                                       "${snapshot.current!.condition!.text}",
                                       style: TextStyle(

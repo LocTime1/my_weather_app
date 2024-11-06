@@ -1,11 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:my_weather_app/constans.dart';
-import 'package:stream_chat_flutter/scrollable_positioned_list/src/item_positions_listener.dart';
 import 'package:stream_chat_flutter/scrollable_positioned_list/src/scrollable_positioned_list.dart';
 
 class HourForecast extends StatefulWidget {
@@ -100,7 +97,8 @@ class MyListTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage("assets/images/night_sky.jpg")),
+                  image: AssetImage("assets/images/night_sky.jpg"),
+                  opacity: 0.5),
               boxShadow: [BoxShadow(color: Colors.black, blurRadius: 3)]),
           child: Column(
             children: [
@@ -130,8 +128,12 @@ class MyListTile extends StatelessWidget {
         Container(
           width: size * 0.2,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage("assets/images/night_sky.jpg"),
+              ),
+              boxShadow: [BoxShadow(color: Colors.black, blurRadius: 3)]),
           child: Column(
             children: [
               Image.asset(

@@ -6,10 +6,10 @@ import 'package:my_weather_app/constans.dart';
 import 'package:stream_chat_flutter/scrollable_positioned_list/src/scrollable_positioned_list.dart';
 
 class HourForecast extends StatefulWidget {
-  List<double> temp;
-  List<String> icons;
-  List<int> listIsDay;
-  String dateTime;
+  final List<double> temp;
+  final List<String> icons;
+  final List<int> listIsDay;
+  final String dateTime;
   HourForecast(
       {super.key,
       required this.temp,
@@ -53,10 +53,7 @@ class _HourForecastState extends State<HourForecast> {
         scrollDirection: Axis.horizontal,
         itemCount: 24,
         padding: EdgeInsets.only(
-            top: height * 0.01,
-            left: size * 0.03,
-            right: size * 0.03,
-            bottom: height * 0.01),
+            left: size * 0.03, right: size * 0.03, bottom: height * 0.01),
         itemBuilder: (context, index) {
           return MyListTile(
               temp: temp,
@@ -71,11 +68,11 @@ class _HourForecastState extends State<HourForecast> {
 }
 
 class MyListTile extends StatelessWidget {
-  List<double> temp;
-  List<String> icons;
-  List<int> listIsDay;
-  String hour;
-  int index;
+  final List<double> temp;
+  final List<String> icons;
+  final List<int> listIsDay;
+  final String hour;
+  final int index;
 
   MyListTile(
       {super.key,

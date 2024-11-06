@@ -69,9 +69,8 @@ class _MainScreenState extends State<HomeScreen> {
                             );
                           } else {
                             return Center(
-                                child: Container(
                               child: CircularProgressIndicator(),
-                            ));
+                            );
                           }
                         })
                   ],

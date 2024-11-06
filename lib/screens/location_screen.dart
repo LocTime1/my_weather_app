@@ -57,11 +57,9 @@ class _LocScreenState extends State<LocationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      color: Color.fromARGB(255, 60, 193, 255),
-      child: Center(
+      body: Center(
         child: CircularProgressIndicator(),
       ),
-    ));
+    );
   }
 }

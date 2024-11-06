@@ -24,7 +24,10 @@ class MainInfo extends StatelessWidget {
             var _city = snapshot2.data!;
             return Padding(
               padding: EdgeInsets.only(
-                  top: height * 0.0382, left: size * 0.03, right: size * 0.03),
+                  top: height * 0.0382,
+                  left: size * 0.03,
+                  right: size * 0.03,
+                  bottom: height * 0.0382),
               child: Container(
                   height: height * 0.29,
                   width: size,

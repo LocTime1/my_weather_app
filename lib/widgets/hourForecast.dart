@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:my_weather_app/constans.dart';
-import 'package:stream_chat_flutter/scrollable_positioned_list/src/scrollable_positioned_list.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class HourForecast extends StatefulWidget {
   final List<double> temp;
@@ -26,7 +28,14 @@ class _HourForecastState extends State<HourForecast> {
   late List<double> temp;
   late List<String> icons;
   late List<int> listIsDay;
+  int? currentIndex;
   final ItemScrollController _scrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
+  final ScrollOffsetListener scrollOffsetListener =
+      ScrollOffsetListener.create();
+  final ScrollOffsetController scrollOffsetController =
+      ScrollOffsetController();
   late String hour;
 
   @override
@@ -35,36 +44,77 @@ class _HourForecastState extends State<HourForecast> {
     icons = widget.icons;
     listIsDay = widget.listIsDay;
     hour = widget.dateTime.split(" ")[1].split(":")[0];
+    currentIndex = int.parse(hour) >= 1 ? int.parse(hour) - 1 : 0;
+    itemPositionsListener.itemPositions.addListener(
+      () => log(
+          'Last index: ${itemPositionsListener.itemPositions.value.last.index}  first index: ${itemPositionsListener.itemPositions.value.last.index}'),
+    );
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(
-          index: int.parse(hour) >= 2 ? int.parse(hour) - 2 : 0);
+      _scrollController.jumpTo(index: currentIndex!);
     });
+    // scrollOffsetListener.changes.listen((event) => currentIndex);
+
     double height = MediaQuery.of(context).size.height;
     double size = MediaQuery.of(context).size.width;
     return Container(
-      height: height * 0.1734,
-      width: size * (1 - 0.09),
-      alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(horizontal: size * 0.045),
-      child: ScrollablePositionedList.builder(
-        itemScrollController: _scrollController,
-        scrollDirection: Axis.horizontal,
-        itemCount: 24,
-        padding: EdgeInsets.only(
-            left: size * 0.03, right: size * 0.03, bottom: height * 0.01),
-        itemBuilder: (context, index) {
-          return MyListTile(
-              temp: temp,
-              icons: icons,
-              listIsDay: listIsDay,
-              hour: hour,
-              index: index);
-        },
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () => {
+              setState(() {
+                _scrollController.scrollTo(
+                    duration: Duration(seconds: 1),
+                    index: itemPositionsListener
+                                .itemPositions.value.first.index ==
+                            currentIndex! - 1
+                        ? itemPositionsListener
+                                .itemPositions.value.first.index -
+                            1
+                        : itemPositionsListener.itemPositions.value.last.index -
+                            1);
+              })
+
+              // setState(() {
+              //   currentIndex = currentIndex! - 1;
+              // })
+            },
+            child: Image.asset(
+              "assets/icons/left.png",
+              width: size * 0.065,
+            ),
+          ),
+          Container(
+            height: height * 0.1734,
+            width: size * 0.87,
+            alignment: Alignment.center,
+            // margin: EdgeInsets.symmetric(horizontal: size * 0.045),
+            child: ScrollablePositionedList.builder(
+              itemScrollController: _scrollController,
+              itemPositionsListener: itemPositionsListener,
+              scrollOffsetListener: scrollOffsetListener,
+              scrollOffsetController: scrollOffsetController,
+              scrollDirection: Axis.horizontal,
+              itemCount: 24,
+              padding: EdgeInsets.only(
+                  left: size * 0.03, right: size * 0.03, bottom: height * 0.01),
+              itemBuilder: (context, index) {
+                return MyListTile(
+                    temp: temp,
+                    icons: icons,
+                    listIsDay: listIsDay,
+                    hour: hour,
+                    index: index);
+              },
+            ),
+          ),
+          Image.asset("assets/icons/right.png", width: size * 0.065),
+        ],
       ),
     );
   }
@@ -178,7 +228,7 @@ class MyListTile extends StatelessWidget {
           ),
         ),
         SizedBox(
-          width: 5,
+          width: size * 0.01699,
         )
       ]);
     }

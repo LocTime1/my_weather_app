@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -45,19 +45,20 @@ class _HourForecastState extends State<HourForecast> {
     listIsDay = widget.listIsDay;
     hour = widget.dateTime.split(" ")[1].split(":")[0];
     currentIndex = int.parse(hour) >= 1 ? int.parse(hour) - 1 : 0;
-    itemPositionsListener.itemPositions.addListener(
-      () => log(
-          'Last index: ${itemPositionsListener.itemPositions.value.last.index}  first index: ${itemPositionsListener.itemPositions.value.last.index}'),
-    );
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollController.jumpTo(index: currentIndex!);
+    });
+    itemPositionsListener.itemPositions.addListener(() {
+      currentIndex = min(itemPositionsListener.itemPositions.value.first.index,
+          itemPositionsListener.itemPositions.value.last.index);
+      print("My index -------------- $currentIndex");
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _scrollController.jumpTo(index: currentIndex!);
-    });
     // scrollOffsetListener.changes.listen((event) => currentIndex);
 
     double height = MediaQuery.of(context).size.height;
@@ -69,20 +70,9 @@ class _HourForecastState extends State<HourForecast> {
             onTap: () => {
               setState(() {
                 _scrollController.scrollTo(
-                    duration: Duration(seconds: 1),
-                    index: itemPositionsListener
-                                .itemPositions.value.first.index ==
-                            currentIndex! - 1
-                        ? itemPositionsListener
-                                .itemPositions.value.first.index -
-                            1
-                        : itemPositionsListener.itemPositions.value.last.index -
-                            1);
+                    duration: Duration(seconds: 1), index: currentIndex! - 1);
+                currentIndex = currentIndex! - 1;
               })
-
-              // setState(() {
-              //   currentIndex = currentIndex! - 1;
-              // })
             },
             child: Image.asset(
               "assets/icons/left.png",
@@ -113,7 +103,17 @@ class _HourForecastState extends State<HourForecast> {
               },
             ),
           ),
-          Image.asset("assets/icons/right.png", width: size * 0.065),
+          GestureDetector(
+              onTap: () => {
+                    setState(() {
+                      _scrollController.scrollTo(
+                          duration: Duration(seconds: 1),
+                          index: currentIndex! + 1);
+                      currentIndex = currentIndex! + 1;
+                    })
+                  },
+              child:
+                  Image.asset("assets/icons/right.png", width: size * 0.065)),
         ],
       ),
     );

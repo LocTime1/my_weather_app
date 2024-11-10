@@ -38,26 +38,36 @@ class MyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // double height = MediaQuery.of(context).size.height;
     double size = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            PageTransition(
-                type: PageTransitionType.size,
-                alignment: Alignment.bottomCenter,
-                child: AnotherDayScreen(
-                  forecastData: forecast,
-                )));
-      },
-      child: Container(
-        padding: EdgeInsets.all(5),
-        margin: EdgeInsets.all(5),
-        color: Colors.green,
-        width: size * 0.85,
-        child: Row(
-          children: [Text("Завтра")],
-        ),
-      ),
-    );
+    return FutureBuilder(
+        future: forecast,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.size,
+                        alignment: Alignment.bottomCenter,
+                        child: AnotherDayScreen(
+                          forecastData: forecast,
+                        )));
+              },
+              child: Container(
+                padding: EdgeInsets.all(5),
+                margin: EdgeInsets.all(5),
+                color: Colors.green,
+                width: size * 0.85,
+                child: Row(
+                  children: [Text("Завтра")],
+                ),
+              ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }

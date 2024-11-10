@@ -45,6 +45,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   page_transition: ^2.1.0
   shadow_container: ^0.0.1
+  wolt_modal_sheet: ^0.9.3
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +71,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icons/my_location.png
+    - assets/icons/Location.png
     - assets/icons/loupe.png
     - assets/images/
     - assets/icons/weather/day/

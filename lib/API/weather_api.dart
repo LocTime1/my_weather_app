@@ -14,7 +14,8 @@ class WeatherApi {
     parameters = {
       'key': "5fa6e0752e2d4172a2193433240410",
       'q': locationDevice,
-      'lang': 'ru'
+      'lang': 'ru',
+      'days': "3"
     };
 
     var url = Uri.https('api.weatherapi.com', '/v1/forecast.json', parameters);

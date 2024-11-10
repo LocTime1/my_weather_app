@@ -8,6 +8,7 @@ import 'package:my_weather_app/widgets/forecast_week.dart';
 import 'package:my_weather_app/widgets/hourForecast.dart';
 import 'package:my_weather_app/widgets/main_info.dart';
 import 'package:my_weather_app/widgets/my_appbar.dart';
+import 'package:my_weather_app/widgets/new_appBar.dart';
 import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,6 +47,11 @@ class _MainScreenState extends State<HomeScreen> {
                   snapshot.data!.forecast!.forecastday!.forEach(
                       (v) => v.hour!.forEach((i) => listIsDay.add(i.isDay!)));
                   return Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage(
+                                "assets/images/night_background.png"))),
                     child: Column(
                       children: [
                         Expanded(
@@ -53,20 +59,20 @@ class _MainScreenState extends State<HomeScreen> {
                             children: [
                               Column(
                                 children: [
-                                  MyAppbar(),
-                                  MainInfo(
-                                    snapshot: snapshot.data!,
-                                  ),
-                                  HourForecast(
-                                    temp: temp,
-                                    icons: icons,
-                                    listIsDay: listIsDay,
-                                    dateTime:
-                                        snapshot.data!.location!.localtime!,
-                                  ),
-                                  ForecastWeek(
-                                    forecast: forecast,
-                                  )
+                                  NewAppBar(),
+                                  // MainInfo(
+                                  //   snapshot: snapshot.data!,
+                                  // ),
+                                  // HourForecast(
+                                  //   temp: temp,
+                                  //   icons: icons,
+                                  //   listIsDay: listIsDay,
+                                  //   dateTime:
+                                  //       snapshot.data!.location!.localtime!,
+                                  // ),
+                                  // ForecastWeek(
+                                  //   forecast: forecast,
+                                  // )
                                 ],
                               ),
                             ],

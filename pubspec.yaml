@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/icons/Location.png
     - assets/icons/loupe.png
+    - assets/icons/Search.png
     - assets/images/
     - assets/icons/weather/day/
     - assets/icons/weather/night/

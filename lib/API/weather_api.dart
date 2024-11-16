@@ -26,14 +26,14 @@ class WeatherApi {
     if (response.statusCode == 200) {
       var futureForecast = WeatherForecast.fromJson(
           json.decode(utf8.decode(response.bodyBytes)));
-      var lastData = await DBProvider.db.getLastData();
-      if (lastData == null) {
-        DBProvider.db.insertData(LastData(
-          lat: futureForecast.location!.lat,
-          long: futureForecast.location!.lon,
-          city: futureForecast.location!.name,
-        ));
-      }
+      // var lastData = await DBProvider.db.getLastData();
+      // if (lastData == null) {
+      DBProvider.db.insertData(LastData(
+        lat: futureForecast.location!.lat,
+        long: futureForecast.location!.lon,
+        city: futureForecast.location!.name,
+      ));
+
       return futureForecast;
     } else {
       return Future.error('Error response');

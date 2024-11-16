@@ -59,7 +59,7 @@ class _MainScreenState extends State<HomeScreen> {
                             children: [
                               Column(
                                 children: [
-                                  NewAppBar(),
+                                  NewAppbar()
                                   // MainInfo(
                                   //   snapshot: snapshot.data!,
                                   // ),

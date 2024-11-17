@@ -1,19 +1,12 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/search_bar/gf_search_bar.dart';
 import 'package:my_weather_app/API/weather_api.dart';
 import 'package:my_weather_app/constans.dart';
-// import 'package:my_weather_app/API/weather_api.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/screens/home_screen.dart';
+import 'package:my_weather_app/screens/location_screen.dart';
 import 'package:page_transition/page_transition.dart';
-// import 'package:my_weather_app/screens/home_screen.dart';
-// import 'package:my_weather_app/screens/location_screen.dart';
-// import 'package:page_transition/page_transition.dart';
-// import 'package:wolt_modal_sheet/wolt_modal_sheet.dart';
 
 class NewAppbar extends StatefulWidget {
   const NewAppbar({super.key});
@@ -94,7 +87,8 @@ class _NewAppbarState extends State<NewAppbar> {
             width: width * 0.6626,
             padding: EdgeInsets.all(16.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              // mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(left: width * 0.05),
@@ -121,6 +115,9 @@ class _NewAppbarState extends State<NewAppbar> {
                   color: const Color.fromRGBO(5, 86, 166, 69),
                   height: 5,
                 ),
+                SizedBox(
+                  height: 5,
+                ),
                 Row(
                   children: [
                     IconButton(
@@ -143,19 +140,100 @@ class _NewAppbarState extends State<NewAppbar> {
                               ? "assets/icons/russia.png"
                               : "assets/icons/en.png",
                           width: 25,
+                          color: Colors.white,
                         )),
                     Container(
                         width: 190,
                         child: DropSearch(
                           lang: lang,
-                        ))
+                        )),
                   ],
                 ),
-                // TextField(
-                //   decoration: InputDecoration(
-                //     suffixIcon: Image.asset("assets/icons/Search.png"),
-                //   ),
-                // )
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Мои любимые города:",
+                  style: TextStyle(color: Colors.white),
+                ),
+                Container(
+                  height: 100,
+                  child: FutureBuilder(
+                      future: DBProvider.db.getFewLastData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<String> data = snapshot.data!;
+                          return ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                var item = data[index];
+                                return Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        var _forecast = WeatherApi()
+                                            .fetchWeather(item.toLowerCase());
+                                        Navigator.push(
+                                            context,
+                                            PageTransition(
+                                                type: PageTransitionType.size,
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: HomeScreen(
+                                                  forecastData: _forecast,
+                                                )));
+                                      },
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
+                        } else {
+                          return CircularProgressIndicator();
+                        }
+                      }),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "или",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.size,
+                            alignment: Alignment.bottomCenter,
+                            child: LocationScreen()));
+                  },
+                  child: Container(
+                    width: 250,
+                    height: 40,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Colors.white),
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Text(
+                      "Определить моё местоположение",
+                      style: TextStyle(color: Colors.white, fontSize: 13),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -165,19 +243,10 @@ class _NewAppbarState extends State<NewAppbar> {
   }
 }
 
-// class MyCustomBottomSheetType extends WoltBottomSheetType {
-//   const MyCustomBottomSheetType()
-//       : super(
-//           shapeBorder: const RoundedRectangleBorder(
-//               borderRadius: BorderRadius.all(Radius.circular(24))),
-//           showDragHandle: false,
-//           barrierDismissible: false,
-//         );
-// }
 class DropSearch extends StatefulWidget {
-  String lang;
+  final String lang;
 
-  DropSearch({super.key, required this.lang});
+  const DropSearch({super.key, required this.lang});
 
   @override
   State<DropSearch> createState() => _DropSearchState();

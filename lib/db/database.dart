@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:my_weather_app/models/last_data.dart';
@@ -44,6 +45,35 @@ class DBProvider {
     } else {
       return null;
     }
+  }
+
+  Future<List<String>?> getFewLastData() async {
+    Database db = await database;
+    final List<Map<String, dynamic>> dataMapList = await db.query(table);
+    final List<LastData> dataList = [];
+    dataMapList.forEach((dataMap) {
+      dataList.add(LastData.fromMap(dataMap));
+    });
+    final List<String> fewLastData = [];
+    for (int i = dataList.length - 1; fewLastData.length < 4; i--) {
+      if (i < 0)
+        break;
+      else {
+        bool in_fewLastData = false;
+        for (int j = 0; j < fewLastData.length; j++) {
+          print(in_fewLastData);
+          if (dataList[i].city! == fewLastData[j]) {
+            log("${111}");
+            in_fewLastData = true;
+          }
+        }
+        if (in_fewLastData == false) fewLastData.add(dataList[i].city!);
+      }
+    }
+    if (fewLastData.length == 0)
+      return null;
+    else
+      return fewLastData;
   }
 
   Future<LastData> insertData(LastData lastData) async {

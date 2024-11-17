@@ -39,22 +39,24 @@ class _NewAppbarState extends State<NewAppbar> {
               width: size,
               child: GestureDetector(
                 onTap: () {
-                  print("2222");
-
                   showTopModal(context, height, size, _city);
-                  print("11111");
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(
+                      width: size * 0.08,
+                    ),
                     Image.asset(
                       "assets/icons/Location.png",
                       height: height * 0.033,
                     ),
-                    SizedBox(
-                      width: size * 0.28883,
+                    Container(
+                      width: size * 0.31883,
                       height: height * 0.0338,
                       child: AutoSizeText(
+                        maxLines: 1,
                         "$_city",
                         style: TextStyle(
                             color: Colors.white, fontSize: size * 0.07),
@@ -214,12 +216,13 @@ class _NewAppbarState extends State<NewAppbar> {
                 ),
                 InkWell(
                   onTap: () {
+                    bool? need = true;
                     Navigator.push(
                         context,
                         PageTransition(
                             type: PageTransitionType.size,
                             alignment: Alignment.bottomCenter,
-                            child: LocationScreen()));
+                            child: LocationScreen(need)));
                   },
                   child: Container(
                     width: 250,

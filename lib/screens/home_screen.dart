@@ -9,6 +9,7 @@ import 'package:my_weather_app/models/weather_forecast.dart';
 // import 'package:my_weather_app/widgets/main_info.dart';
 // import 'package:my_weather_app/widgets/my_appbar.dart';
 import 'package:my_weather_app/widgets/new_appBar.dart';
+import 'package:my_weather_app/widgets/new_main_info.dart';
 // import 'package:my_weather_app/widgets/new_main_info.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -61,10 +62,10 @@ class _MainScreenState extends State<HomeScreen> {
                               Column(
                                 children: [
                                   NewAppbar(),
-                                  SizedBox(
-                                    height: 50,
-                                  ),
-                                  // NewMainInfo()
+
+                                  NewMainInfo(
+                                    forecast: snapshot.data!,
+                                  )
                                   // MainInfo(
                                   //   snapshot: snapshot.data!,
                                   // ),

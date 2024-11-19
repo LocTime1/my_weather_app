@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_weather_app/API/weather_api.dart';
 import 'package:my_weather_app/db/database.dart';
 import 'package:my_weather_app/models/weather_forecast.dart';
+import 'package:my_weather_app/widgets/newHourForecast.dart';
 // import 'package:my_weather_app/widgets/forecast_week.dart';
 // import 'package:my_weather_app/widgets/hourForecast.dart';
 // import 'package:my_weather_app/widgets/main_info.dart';
@@ -64,6 +65,12 @@ class _MainScreenState extends State<HomeScreen> {
                                   NewAppbar(),
 
                                   NewMainInfo(
+                                    forecast: snapshot.data!,
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  NewHourForecast(
                                     forecast: snapshot.data!,
                                   )
                                   // MainInfo(

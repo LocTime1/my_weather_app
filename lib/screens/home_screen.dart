@@ -11,6 +11,7 @@ import 'package:my_weather_app/widgets/newHourForecast.dart';
 // import 'package:my_weather_app/widgets/my_appbar.dart';
 import 'package:my_weather_app/widgets/new_appBar.dart';
 import 'package:my_weather_app/widgets/new_main_info.dart';
+import 'package:my_weather_app/widgets/weekForecast.dart';
 // import 'package:my_weather_app/widgets/new_main_info.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -72,7 +73,11 @@ class _MainScreenState extends State<HomeScreen> {
                                   ),
                                   NewHourForecast(
                                     forecast: snapshot.data!,
-                                  )
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Weekforecast(forecast: snapshot.data!)
                                   // MainInfo(
                                   //   snapshot: snapshot.data!,
                                   // ),

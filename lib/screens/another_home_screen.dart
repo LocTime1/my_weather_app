@@ -25,42 +25,46 @@ class _MainScreenState extends State<AnotherHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+        double height = MediaQuery.of(context).size.height;
+    double size = MediaQuery.of(context).size.width;
     return Scaffold(
         body: Container(
-            padding: EdgeInsets.only(top: 50, right: 20, left: 20),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage("assets/images/night_background.png"))),
-            child: Column(
-              children: [
-                // MyAppBar(),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // Заголовок
-                    Text(
-                      'Прогноз погоды',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
-                    ),
-                    SizedBox(height: 16),
-                    // График
-                    SizedBox(
-                      height: 220,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
-                          width: 800,
-                          child: WeatherChart(),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    // Иконки с текстом
-                  ],
+      padding: EdgeInsets.only(top: 50, right: 20, left: 20),
+      height: height,
+      width: size,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage("assets/images/night_background.png"))),
+      child: Stack(children: [
+        Container(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 7,
+            itemBuilder: (context, snapshot) {
+              return Row(
+                children: [Container(
+                  height: 500,
+                  width: 100,
+                  color: Colors.black,
                 ),
-              ],
-            )));
+                SizedBox(width: 10,)
+      ]);
+            }
+            ),
+        ),
+        SizedBox(
+          height: 220,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              width: 800,
+              child: WeatherChart(),
+            ),
+          ),
+        ),
+      ]),
+    ));
   }
 }
 

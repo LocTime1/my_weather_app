@@ -8,20 +8,21 @@ import 'package:my_weather_app/models/weather_forecast.dart';
 
 class NewMainInfo extends StatelessWidget {
   final WeatherForecast forecast;
-  NewMainInfo({super.key, required this.forecast});
+  final int ind;
+  NewMainInfo({super.key, required this.forecast, required this.ind});
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double size = MediaQuery.of(context).size.width;
     String maxTemp =
-        forecast.forecast!.forecastday![0].day!.maxtempC!.round() > 0
-            ? "+${forecast.forecast!.forecastday![0].day!.maxtempC!.round()}°"
-            : "${forecast.forecast!.forecastday![0].day!.maxtempC!.round()}°";
+        forecast.forecast!.forecastday![ind].day!.maxtempC!.round() > 0
+            ? "+${forecast.forecast!.forecastday![ind].day!.maxtempC!.round()}°"
+            : "${forecast.forecast!.forecastday![ind].day!.maxtempC!.round()}°";
     String minTemp =
-        forecast.forecast!.forecastday![0].day!.mintempC!.round() > 0
-            ? "+${forecast.forecast!.forecastday![0].day!.mintempC!.round()}°"
-            : "${forecast.forecast!.forecastday![0].day!.mintempC!.round()}°";
+        forecast.forecast!.forecastday![ind].day!.mintempC!.round() > 0
+            ? "+${forecast.forecast!.forecastday![ind].day!.mintempC!.round()}°"
+            : "${forecast.forecast!.forecastday![ind].day!.mintempC!.round()}°";
     return Container(
       width: size * 0.8883,
       height: height * 0.34,
@@ -94,11 +95,11 @@ class NewMainInfo extends StatelessWidget {
                     width: size * 0.045,
                   ),
                   Text(
-                    "${forecast.location!.localtime!.split(' ')[1]}",
-                    style: TextStyle(color: Colors.white, fontSize: 23),
+                    "${forecast.location!.localtime!.split(' ')[0]}",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   SizedBox(
-                    width: size * 0.15,
+                    width: size * 0.08,
                   ),
                   Image.asset(
                     forecast.current!.isDay == 1
@@ -173,14 +174,14 @@ class BottomLine extends StatelessWidget {
           Image.asset(
             "assets/icons/wind.png",
             scale: 0.7,
-            height: height * 0.0525,
+            height: height * 0.0425,
           ),
           SizedBox(
             height: height * 0.025,
             child: AutoSizeText(
               "$windKph м/с",
               maxLines: 1,
-              style: TextStyle(color: Colors.white, fontSize: size * 0.05),
+              style: TextStyle(color: Colors.white, fontSize: size * 0.045),
             ),
           ),
           SizedBox(
@@ -189,14 +190,14 @@ class BottomLine extends StatelessWidget {
           Image.asset(
             "assets/icons/water.png",
             scale: 0.7,
-            height: height * 0.0525,
+            height: height * 0.0425,
           ),
           SizedBox(
             height: height * 0.025,
             child: AutoSizeText(
               maxLines: 1,
               "$humidity%",
-              style: TextStyle(color: Colors.white, fontSize: size * 0.05),
+              style: TextStyle(color: Colors.white, fontSize: size * 0.045),
             ),
           ),
           SizedBox(
@@ -205,14 +206,14 @@ class BottomLine extends StatelessWidget {
           Image.asset(
             "assets/icons/pressure.png",
             scale: 0.7,
-            height: height * 0.0525,
+            height: height * 0.0425,
           ),
           SizedBox(
             height: height * 0.025,
             child: AutoSizeText(
               "${(pressureMb * 0.750064).round()}мм.рт.",
               maxLines: 1,
-              style: TextStyle(color: Colors.white, fontSize: size * 0.05),
+              style: TextStyle(color: Colors.white, fontSize: size * 0.045),
             ),
           ),
         ],

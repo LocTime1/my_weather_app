@@ -67,6 +67,7 @@ class _MainScreenState extends State<HomeScreen> {
 
                                   NewMainInfo(
                                     forecast: snapshot.data!,
+                                    ind: 0
                                   ),
                                   SizedBox(
                                     height: 15,
